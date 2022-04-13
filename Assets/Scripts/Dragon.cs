@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dragon : MonoBehaviour
 {
-    [SerializeField] private Transform _dragonTransform;
+    // [SerializeField] private Transform _dragonTransform;
     [SerializeField] private Rigidbody _dragonRB;
     [SerializeField] private Animator _dragonAnimator;
 
@@ -12,6 +12,7 @@ public class Dragon : MonoBehaviour
     [SerializeField] private float _horizontalSensitivity = 5f;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Transform _cam;
+    [SerializeField] private Camera _camera;
 
 
     private Touch _touch;
@@ -21,27 +22,49 @@ public class Dragon : MonoBehaviour
 
     private bool _canJump = true;
     private bool _canFire = true;
+    private bool _canMove = true;
+
 
     private void Start() {
         Application.targetFrameRate = 60;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        _horizontal = _joystick.Horizontal;
-        _vertical = _joystick.Vertical;
+    private void Update() {
+        // Swipe();
+        Keys();
+        TouchControls();
+        transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
+        _cam.position  += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
 
-        Vector3 movement = new Vector3(_horizontal, 0, 0);
+    }
 
-        _dragonTransform.position += new Vector3(_horizontal * _horizontalSensitivity, 0, _walkSpeed) * Time.fixedDeltaTime;
-        _cam.position  += new Vector3(0, 0, _walkSpeed) * Time.fixedDeltaTime;
- 
-        float velocityX = Vector3.Dot(movement, transform.right);
-        float velocityY = Vector3.Dot(movement, transform.up);
+    private void Move(string direction) {
+        switch(direction) {
+        case "Left": transform.position += new Vector3(-1.5f, 0, 0);
+        break;
+         case "Right": transform.position += new Vector3(1.5f, 0, 0);
+        break;
+         case "Up": _dragonRB.velocity = new Vector3(0,0,0);
+                    _dragonRB.AddForce(0, 10, 0, ForceMode.Impulse);
+        break;
+        }
+    }
 
-        _dragonAnimator.SetFloat("VelocityX", velocityX, 0.1f, Time.fixedDeltaTime);
-        _dragonAnimator.SetFloat("VelocityY", velocityY, 0.1f, Time.fixedDeltaTime);
+    private void Keys() {
+        if(Input.GetKeyDown("w") && _canJump)
+            Move("Up");
+
+        // if(Input.GetKeyDown("a") && _canMove)
+        //     Move("Left");
+
+        // if(Input.GetKeyDown("d") && _canMove)
+        //     Move("Right");
+
+    }
+
+    private void TouchControls() {
+        if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) && _canJump) 
+            Move("Up");
     }
 
     public void Jump() {
@@ -58,6 +81,12 @@ public class Dragon : MonoBehaviour
     }
 
 
+    private IEnumerator MoveDelay() {
+        _canMove = false;
+        yield return new WaitForSeconds(0.2f);
+        _canMove = true;
+    }
+
     private IEnumerator JumpDelay() {
         _canJump = false;
         yield return new WaitForSeconds(1f);
@@ -68,5 +97,12 @@ public class Dragon : MonoBehaviour
         _canFire = false;
         yield return new WaitForSeconds(1f);
         _canFire = true;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(!other.CompareTag("Trap")) return;
+
+        print("hit");
+        _canJump = false;
     }
 }
