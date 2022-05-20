@@ -16,17 +16,9 @@ public class Dragon : MonoBehaviour
     private bool _canJump = true;
     private bool _canMove = false;
 
-    private void OnEnable() {
-        _gameManager._gameStateEvent.AddListener(PlayerDied);
-    }
+    private void OnEnable() => _gameManager._gameStateEvent.AddListener(PlayerDied);
 
-    private void OnDisable() {
-        _gameManager._gameStateEvent.RemoveListener(PlayerDied);
-    }
-
-    // public void PlayerStart() {
-
-    // }
+    private void OnDisable() => _gameManager._gameStateEvent.RemoveListener(PlayerDied);
 
     private void Update() {
         if(_canMove)
