@@ -5,26 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class Dragon : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _dragonRB;
-    [SerializeField] private Animator _dragonAnimator;
-
-    [SerializeField] private float _walkSpeed = 4f;
-    [SerializeField] private float _jumpSensitivity = 10f;
+    [SerializeField] private GameManagerScriptableObject _gameManager;
     [SerializeField] private Transform _cam;
 
+    [SerializeField] private Rigidbody _dragonRB;
+    [SerializeField] private Animator _dragonAnimator;
+    [SerializeField] private float _walkSpeed = 4f;
+    [SerializeField] private float _jumpSensitivity = 10f;
+
     private bool _canJump = true;
-    private bool _canMove = true;
-    private bool _gameOver = false;
+    private bool _canMove = false;
 
-
-    private void Start() {
-        Application.targetFrameRate = 60;
+    private void OnEnable() {
+        _gameManager._gameStateEvent.AddListener(PlayerDied);
     }
 
+    private void OnDisable() {
+        _gameManager._gameStateEvent.RemoveListener(PlayerDied);
+    }
+
+    // public void PlayerStart() {
+
+    // }
+
     private void Update() {
-        // if(_gameOver) return;
-    
-        Movement();
+        if(_canMove)
+            Movement();
     }
 
     private void Movement() {
@@ -45,7 +51,7 @@ public class Dragon : MonoBehaviour
     }
 
     private void TouchControls() {
-        if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)) 
+        if((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
             Jump();
     }
 
@@ -55,15 +61,18 @@ public class Dragon : MonoBehaviour
         transform.rotation = newRotation;
     }
 
-    public void Jump() {
+// Switch to public if seperate touch controller script
+    private void Jump() {
         if(!_canJump) return;
 
+        // re-examine this later
         _dragonAnimator.SetFloat("Running", 0);
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
 
         for(int i= 0; i < _jumpSensitivity; i++) {
             _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
+            // re-examine this later
             VelocityToRotation();
         }
     }
@@ -74,8 +83,13 @@ public class Dragon : MonoBehaviour
         _canJump = true;
     }
 
-    private void PlayerDied() {
-        _gameOver = true;
+    private void PlayerDied(bool gameState) {
+        if(gameState) {
+            _canMove = true;
+            return;
+        }
+
+        _canMove = false;
         _dragonRB.velocity = new Vector3(0,0,0);
         _dragonRB.AddForce(0, 4, 2, ForceMode.Impulse);
     }
@@ -84,7 +98,14 @@ public class Dragon : MonoBehaviour
         if(other.CompareTag("Floor"))
             _dragonAnimator.SetFloat("Running", 1);
 
-        if(other.CompareTag("Trap")) 
-            PlayerDied();
+        if(other.CompareTag("Trap")) {
+            _gameManager.ChangeGameState(false);
+            transform.GetComponent<Collider>().enabled = false;
+        }
+        
+        if(other.CompareTag("Hurdle")) {
+            _gameManager.ChangeScore(1);
+            other.GetComponent<Collider>().enabled = false;
+        }
     }
 }
