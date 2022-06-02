@@ -17,9 +17,13 @@ public class UIManager : MonoBehaviour
         _startButton.SetActive(false);
         _tapText.SetActive(false);
     }
+    
+    // public void EnterLevelButton() {
+    //     _gameManager.ChangeScene("LastScene");
+    // }
 
-    public void RetryButton() {
-        _gameManager.GameReset();
+    public void ChangeScene(string sceneName) {
+        _gameManager.ChangeScene(sceneName);
     }
 
     private void OnEnable() {
@@ -29,6 +33,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable() {
         _gameManager._scoreChangeEvent.RemoveListener(ChangeScoreText);
+        _gameManager.ResetVariables();
     }
 
     private void ChangeScoreText(int score) {

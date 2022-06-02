@@ -28,7 +28,7 @@ public class GameManagerScriptableObject : ScriptableObject
 
     private void OnDisable() {
         SetHighScore();
-        // GameReset();
+        ResetVariables();
         PlayerPrefs.SetInt("highScore", _highScore);
     }
 
@@ -43,10 +43,12 @@ public class GameManagerScriptableObject : ScriptableObject
         _gameStateEvent.Invoke(_gameState);
     }
 
-    public void GameReset() {
+    public void ChangeScene(string sceneName) => SceneManager.LoadScene(sceneName); 
+    // public void GameReset() => SceneManager.LoadScene("LastScene");
+
+    public void ResetVariables() {
         ChangeGameState(false);
         ChangeScore(-(_score));
-        SceneManager.LoadScene("LastScene");
     }
 
     private void SetHighScore() {

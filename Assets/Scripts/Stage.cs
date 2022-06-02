@@ -32,7 +32,7 @@ public class Stage : MonoBehaviour
 
     private void ShuffleTraps() {
         for(int i = 0; i < _trapArray.Length; i++) {
-            _trapArray[i].transform.localPosition = new Vector3(_trapArray[i].transform.localPosition.x, Random.Range(1f, 4.6f), _trapArray[i].transform.localPosition.z);
+            _trapArray[i].transform.localPosition = new Vector3(_trapArray[i].transform.localPosition.x, Random.Range(0.25f, 5.6f), _trapArray[i].transform.localPosition.z);
         }
     }
 
