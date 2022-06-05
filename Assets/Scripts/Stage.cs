@@ -17,9 +17,9 @@ public class Stage : MonoBehaviour
     }
 
     public void OnEnable() {
-        for(int i = 0; i < _trapArray.Length; i++) {
-            _trapArray[i].GetComponent<Collider>().enabled = true;
-        }
+        // for(int i = 0; i < _trapArray.Length; i++) {
+        //     _trapArray[i].GetComponent<Collider>().enabled = true;
+        // }
     }
 
     private void Start() => ShuffleTraps();

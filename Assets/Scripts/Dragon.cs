@@ -87,7 +87,7 @@ public class Dragon : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Floor"))
+        if(other.CompareTag("Floor") && _canMove)
             _dragonAnimator.SetFloat("Running", 1);
 
         if(other.CompareTag("Trap")) {
