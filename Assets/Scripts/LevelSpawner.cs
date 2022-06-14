@@ -9,6 +9,8 @@ public class LevelSpawner : MonoBehaviour
 [SerializeField] private GameObjectPool _stagePool;
 
 private GameObject _nextStage;
+    
+    public void OnEnable() => _stagePool.AddToPool(10);
 
     public void SpawnNextStage() {
         _nextStage = _stagePool.Get();

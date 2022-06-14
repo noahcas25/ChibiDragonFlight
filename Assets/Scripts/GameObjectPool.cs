@@ -35,8 +35,9 @@ public class GameObjectPool : MonoBehaviour
     public void AddToPool(int count) {
         for(int i = 0; i < count; i++) {
             GameObject newObject;
-            newObject = Instantiate(_prefab);
-            
+            newObject = Instantiate(_prefab.transform.GetChild(Random.Range(0, _prefab.transform.childCount)).gameObject);
+            newObject.SetActive(false);
+
             _pool.Enqueue(newObject);
         }
     }

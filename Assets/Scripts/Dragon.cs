@@ -53,18 +53,14 @@ public class Dragon : MonoBehaviour
         transform.rotation = newRotation;
     }
 
-// Switch to public if seperate touch controller script
     private void Jump() {
         if(!_canJump) return;
-
-        // re-examine this later
         _dragonAnimator.SetFloat("Running", 0);
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
 
         for(int i= 0; i < _jumpSensitivity; i++) {
             _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-            // re-examine this later
             VelocityToRotation();
         }
     }
@@ -78,6 +74,7 @@ public class Dragon : MonoBehaviour
     private void PlayerDied(bool gameState) {
         if(gameState) {
             _canMove = true;
+            _dragonRB.AddForce(0, 2, 0, ForceMode.Impulse);
             return;
         }
 
@@ -87,9 +84,6 @@ public class Dragon : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Floor"))
-            _dragonAnimator.SetFloat("Running", 1);
-
         if(other.CompareTag("Trap")) {
             _gameManager.ChangeGameState(false);
             transform.GetComponent<Collider>().enabled = false;
@@ -99,5 +93,10 @@ public class Dragon : MonoBehaviour
             _gameManager.ChangeScore(1);
             other.GetComponent<Collider>().enabled = false;
         }
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.tag == "Floor" && _canMove)
+            _dragonAnimator.SetFloat("Running", 1);
     }
 }
