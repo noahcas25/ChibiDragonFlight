@@ -6,6 +6,7 @@ public class Stage : MonoBehaviour
 {
     [SerializeField] GameObjectPool _stagePool;
     [SerializeField] LevelSpawner _levelSpawner;
+    [SerializeField] GameManagerScriptableObject _gameManager;
 
     private GameObject _traps;
     private GameObject[] _trapArray;
@@ -17,9 +18,9 @@ public class Stage : MonoBehaviour
     }
 
     public void OnEnable() {
-        // for(int i = 0; i < _trapArray.Length; i++) {
-        //     _trapArray[i].GetComponent<Collider>().enabled = true;
-        // }
+        for(int i = 0; i < _trapArray.Length; i++) {
+            _trapArray[i].GetComponent<Collider>().enabled = true;
+        }
     }
 
     private void Start() => ShuffleTraps();
@@ -37,8 +38,9 @@ public class Stage : MonoBehaviour
     }
 
     private IEnumerator ReturnToPoolDelay() {
-        yield return new WaitForSeconds(6f);
-        _stagePool.ReturnToPool(this.gameObject);
+        yield return new WaitForSeconds(8f);
+        if(_gameManager._gameState)
+            _stagePool.ReturnToPool(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {
