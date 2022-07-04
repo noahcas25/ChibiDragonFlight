@@ -5967,7 +5967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 91.333275, y: -480}
+  m_AnchoredPosition: {x: 6.333275, y: -480}
   m_SizeDelta: {x: 387.7775, y: 195.4342}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &104450904
@@ -5990,10 +5990,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shop
+  m_text: shop
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 55d0d2bc1a2f3e84694ff13ba7710384, type: 2}
-  m_sharedMaterial: {fileID: -1514976271312660461, guid: 55d0d2bc1a2f3e84694ff13ba7710384,
+  m_fontAsset: {fileID: 11400000, guid: 85af3902926d9a242af2e8a18979331a, type: 2}
+  m_sharedMaterial: {fileID: -2398864974435279986, guid: 85af3902926d9a242af2e8a18979331a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6018,8 +6018,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 200
-  m_fontSizeBase: 200
+  m_fontSize: 280
+  m_fontSizeBase: 280
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -20136,7 +20136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.33333588, y: -833.33344}
+  m_AnchoredPosition: {x: -10.666664, y: -805.33344}
   m_SizeDelta: {x: 387.7775, y: 195.4342}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &748740632
@@ -20161,8 +20161,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 55d0d2bc1a2f3e84694ff13ba7710384, type: 2}
-  m_sharedMaterial: {fileID: -1514976271312660461, guid: 55d0d2bc1a2f3e84694ff13ba7710384,
+  m_fontAsset: {fileID: 11400000, guid: 85af3902926d9a242af2e8a18979331a, type: 2}
+  m_sharedMaterial: {fileID: -2398864974435279986, guid: 85af3902926d9a242af2e8a18979331a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -20187,8 +20187,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 180
-  m_fontSizeBase: 180
+  m_fontSize: 280
+  m_fontSizeBase: 280
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -34523,7 +34523,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh1293094
+  m_Name: pb_Mesh81766
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

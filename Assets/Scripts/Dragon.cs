@@ -8,11 +8,13 @@ public class Dragon : MonoBehaviour
     [SerializeField] private Transform _cam;
     [SerializeField] private Rigidbody _dragonRB;
     [SerializeField] private Animator _dragonAnimator;
+
     [SerializeField] private float _walkSpeed = 4f;
     [SerializeField] private float _jumpSensitivity = 10f;
 
     private bool _canJump = true;
     private bool _canMove = false;
+    private Quaternion _newRotation = new Quaternion();
 
     private void OnEnable() {
         GameManager.Instance._gameStateEvent.AddListener(PlayerDied);
@@ -37,6 +39,11 @@ public class Dragon : MonoBehaviour
         _cam.position  += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
     }
 
+    private void VelocityToRotation() {
+        _newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y - 10, 0, 0);
+        transform.rotation = _newRotation;
+    }
+
     private void Keys() {
         if(Input.GetKeyDown("w"))
             Jump();
@@ -50,12 +57,6 @@ public class Dragon : MonoBehaviour
             Jump();
     }
 
-    private void VelocityToRotation() {
-        Quaternion newRotation = new Quaternion();
-        newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y - 10, 0, 0);
-        transform.rotation = newRotation;
-    }
-
     private void Jump() {
         if(!_canJump) return;
 
@@ -64,10 +65,10 @@ public class Dragon : MonoBehaviour
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
 
-        for(int i= 0; i < _jumpSensitivity; i++) {
-            _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-            VelocityToRotation();
-        }
+        // for(int i= 0; i < _jumpSensitivity; i++) {
+            _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
+            // VelocityToRotation();
+        // }
     }
 
      private IEnumerator JumpDelay() {

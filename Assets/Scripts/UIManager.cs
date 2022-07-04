@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
             _startMenuCanvas.SetActive(true);
     }
 
+    // public void VolumeChanged(float value) => AudioManager.Instance._audioSource.volume = 
+
     private void GameOver(bool gameState) {
         if(gameState) return;
         
@@ -54,11 +56,13 @@ public class UIManager : MonoBehaviour
     }
 
     private IEnumerator GameOverCoroutine() {
-        _gameOverFlash.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        _gameOverCanvas.SetActive(true);
-        _scoreTextGameOver.text = _scoreText.text;
-        _highScoreText.text = GameManager.Instance._highScore + "";
+        if(_gameOverFlash != null) {
+            _gameOverFlash.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            _gameOverCanvas.SetActive(true);
+            _scoreTextGameOver.text = _scoreText.text;
+            _highScoreText.text = GameManager.Instance._highScore + "";
+        }
     }
 
     private void ChangeScoreText(int score) => _scoreText.text = "" + score;

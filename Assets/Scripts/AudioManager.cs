@@ -13,7 +13,13 @@ public class AudioManager : MonoBehaviour
     private void Awake() => Instance = this;
 
     public void PlayOneShot(int arrayIndex) {
-        _audioSource.PlayOneShot(_audioClips[arrayIndex]);
+        print(arrayIndex);
+        if(_audioSource==null)
+           _audioSource = this.GetComponent<AudioSource>();
+        if(_audioClips[0]==null)
+            print("AUDIOclip");    
+        else         
+            _audioSource.PlayOneShot(_audioClips[arrayIndex]);
     }
 
 
