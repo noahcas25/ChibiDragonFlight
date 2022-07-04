@@ -6,7 +6,6 @@ public class Stage : MonoBehaviour
 {
     [SerializeField] GameObjectPool _stagePool;
     [SerializeField] LevelSpawner _levelSpawner;
-    [SerializeField] GameManagerScriptableObject _gameManager;
 
     private GameObject _traps;
     private GameObject[] _trapArray;
@@ -39,7 +38,7 @@ public class Stage : MonoBehaviour
 
     private IEnumerator ReturnToPoolDelay() {
         yield return new WaitForSeconds(8f);
-        if(_gameManager._gameState)
+        if(GameManager.Instance._gameState)
             _stagePool.ReturnToPool(this.gameObject);
     }
 

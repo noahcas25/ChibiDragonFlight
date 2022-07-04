@@ -13,16 +13,22 @@ public class DragonTitle : MonoBehaviour
 
     private void OnEnable() {
          _startPosition = transform.position;
+
+        if(PlayerPrefs.HasKey("skinMaterial"))
+            ChangeSkinMaterial("T_Dragon_" + PlayerPrefs.GetInt("skinMaterial"));
     }
 
-    private void Update()
-    { 
-          VelocityToRotation();
-          Jump();
-          transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
+    private void Update() {         
+        Movement();
     }
 
-     private void VelocityToRotation() {
+    private void Movement() {
+        VelocityToRotation();
+        Jump();
+        transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
+    }
+
+    private void VelocityToRotation() {
         Quaternion newRotation = new Quaternion();
         newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y-10, 0, 0);
         transform.rotation = newRotation;
@@ -33,7 +39,7 @@ public class DragonTitle : MonoBehaviour
         StartCoroutine(JumpDelay());
         _dragonRB.velocity = new Vector3(0,0,0);
 
-        for(int i=0; i < 8f; i++) {
+        for(int i=0; i < 9f; i++) {
             _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
             VelocityToRotation();
         }
@@ -45,9 +51,15 @@ public class DragonTitle : MonoBehaviour
         _canJump = true;
     }
 
+    private void ChangeSkinMaterial(string skinMaterial) {
+        for(int i = 1; i < 5; i++) {
+            transform.GetChild(i).gameObject.GetComponent<SkinnedMeshRenderer>().material = Resources.Load(skinMaterial, typeof(Material)) as Material;
+        } 
+    }
+
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Trap")) {
-            
+
             _dragonRB.velocity = new Vector3(0,0,0);
             transform.position = _startPosition;
         }

@@ -5,20 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Dragon : MonoBehaviour
 {
-    [SerializeField] private GameManagerScriptableObject _gameManager;
     [SerializeField] private Transform _cam;
-
     [SerializeField] private Rigidbody _dragonRB;
     [SerializeField] private Animator _dragonAnimator;
+
     [SerializeField] private float _walkSpeed = 4f;
     [SerializeField] private float _jumpSensitivity = 10f;
 
     private bool _canJump = true;
     private bool _canMove = false;
+    private Quaternion _newRotation = new Quaternion();
 
-    private void OnEnable() => _gameManager._gameStateEvent.AddListener(PlayerDied);
+    private void OnEnable() {
+        GameManager.Instance._gameStateEvent.AddListener(PlayerDied);
 
-    private void OnDisable() => _gameManager._gameStateEvent.RemoveListener(PlayerDied);
+         if(PlayerPrefs.HasKey("skinMaterial"))
+            ChangeSkinMaterial("T_Dragon_" + PlayerPrefs.GetInt("skinMaterial"));
+    }
+
+    private void OnDisable() => GameManager.Instance._gameStateEvent.RemoveListener(PlayerDied);
 
     private void Update() {
         if(_canMove)
@@ -34,6 +39,11 @@ public class Dragon : MonoBehaviour
         _cam.position  += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
     }
 
+    private void VelocityToRotation() {
+        _newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y - 10, 0, 0);
+        transform.rotation = _newRotation;
+    }
+
     private void Keys() {
         if(Input.GetKeyDown("w"))
             Jump();
@@ -47,22 +57,18 @@ public class Dragon : MonoBehaviour
             Jump();
     }
 
-    private void VelocityToRotation() {
-        Quaternion newRotation = new Quaternion();
-        newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y - 10, 0, 0);
-        transform.rotation = newRotation;
-    }
-
     private void Jump() {
         if(!_canJump) return;
+
+        AudioManager.Instance.PlayOneShot(0);
         _dragonAnimator.SetFloat("Running", 0);
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
 
-        for(int i= 0; i < _jumpSensitivity; i++) {
-            _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-            VelocityToRotation();
-        }
+        // for(int i= 0; i < _jumpSensitivity; i++) {
+            _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
+            // VelocityToRotation();
+        // }
     }
 
      private IEnumerator JumpDelay() {
@@ -74,7 +80,7 @@ public class Dragon : MonoBehaviour
     private void PlayerDied(bool gameState) {
         if(gameState) {
             _canMove = true;
-            _dragonRB.AddForce(0, 2, 0, ForceMode.Impulse);
+            _dragonRB.AddForce(0, 3, 0, ForceMode.Impulse);
             return;
         }
 
@@ -83,14 +89,20 @@ public class Dragon : MonoBehaviour
         _dragonRB.AddForce(0, 4, 2, ForceMode.Impulse);
     }
 
+    private void ChangeSkinMaterial(string skinMaterial) {
+        for(int i = 1; i < 5; i++) {
+            transform.GetChild(i).gameObject.GetComponent<SkinnedMeshRenderer>().material = Resources.Load(skinMaterial, typeof(Material)) as Material;
+        } 
+    }
+
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Trap")) {
-            _gameManager.ChangeGameState(false);
+            GameManager.Instance.ChangeGameState(false);
             transform.GetComponent<Collider>().enabled = false;
         }
         
         if(other.CompareTag("Hurdle")) {
-            _gameManager.ChangeScore(1);
+            GameManager.Instance.ChangeScore(1);
             other.GetComponent<Collider>().enabled = false;
         }
     }

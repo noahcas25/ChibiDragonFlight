@@ -5,12 +5,10 @@ using UnityEngine;
 public class GameObjectPool : MonoBehaviour
 {
 // Variables
-    [SerializeField]
-    private GameObject _prefab;
+    [SerializeField] private GameObject _prefab;
+    private Queue<GameObject> _pool = new Queue<GameObject>();
 
     public static GameObjectPool Instance { get; private set;}
-
-    private Queue<GameObject> _pool = new Queue<GameObject>();
 
     private void Awake() {
         Instance = this;
