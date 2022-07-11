@@ -65,10 +65,7 @@ public class Dragon : MonoBehaviour
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
 
-        // for(int i= 0; i < _jumpSensitivity; i++) {
-            _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
-            // VelocityToRotation();
-        // }
+        _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
     }
 
      private IEnumerator JumpDelay() {
@@ -78,12 +75,14 @@ public class Dragon : MonoBehaviour
     }
 
     private void PlayerDied(bool gameState) {
+        // when game starts
         if(gameState) {
             _canMove = true;
             _dragonRB.AddForce(0, 3, 0, ForceMode.Impulse);
             return;
         }
 
+        // when game ends
         _canMove = false;
         _dragonRB.velocity = new Vector3(0,0,0);
         _dragonRB.AddForce(0, 4, 2, ForceMode.Impulse);
@@ -98,6 +97,7 @@ public class Dragon : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.CompareTag("Trap")) {
             GameManager.Instance.ChangeGameState(false);
+            AudioManager.Instance.PlayOneShot(2);
             transform.GetComponent<Collider>().enabled = false;
         }
         

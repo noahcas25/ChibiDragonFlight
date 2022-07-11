@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -30,6 +31,22 @@ public class UIManager : MonoBehaviour
         _tapText.SetActive(false);
     }
 
+    private void GameOver(bool gameState) {
+        if(gameState) return;
+
+        StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine() {
+        if(_gameOverFlash != null) {
+            _gameOverFlash.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            _gameOverCanvas.SetActive(true);
+            _scoreTextGameOver.text = _scoreText.text;
+            _highScoreText.text = GameManager.Instance.GetHighScore() + "";
+        }
+    }
+
     public void OpenOptions() { 
         Time.timeScale = 0f;
         _optionsCanvas.SetActive(true);
@@ -46,26 +63,12 @@ public class UIManager : MonoBehaviour
             _startMenuCanvas.SetActive(true);
     }
 
-    // public void VolumeChanged(float value) => AudioManager.Instance._audioSource.volume = 
+    public void VolumeChanged() => AudioManager.Instance._audioSource.volume = _pauseButton.GetComponent<Slider>().value;
 
-    private void GameOver(bool gameState) {
-        if(gameState) return;
-        
-        AudioManager.Instance.PlayOneShot(2);
-        StartCoroutine(GameOverCoroutine());
+    private void ChangeScoreText(int score) {
+        if(_scoreText != null) 
+            _scoreText.text = "" + score;
     }
-
-    private IEnumerator GameOverCoroutine() {
-        if(_gameOverFlash != null) {
-            _gameOverFlash.SetActive(true);
-            yield return new WaitForSeconds(1f);
-            _gameOverCanvas.SetActive(true);
-            _scoreTextGameOver.text = _scoreText.text;
-            _highScoreText.text = GameManager.Instance._highScore + "";
-        }
-    }
-
-    private void ChangeScoreText(int score) => _scoreText.text = "" + score;
 
     public void ChangeScene(string sceneName) => GameManager.Instance.ChangeScene(sceneName);
 }

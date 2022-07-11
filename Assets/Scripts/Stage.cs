@@ -38,7 +38,7 @@ public class Stage : MonoBehaviour
 
     private IEnumerator ReturnToPoolDelay() {
         yield return new WaitForSeconds(8f);
-        if(GameManager.Instance._gameState)
+        if(GameManager.Instance.GetGameState())
             _stagePool.ReturnToPool(this.gameObject);
     }
 

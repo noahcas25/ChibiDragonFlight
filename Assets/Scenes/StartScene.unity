@@ -6155,7 +6155,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh637408
+  m_Name: pb_Mesh165184
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7603,7 +7603,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339897159}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.6447043, y: -5.147514, z: 57.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8483,9 +8483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d36ae406c388db469b7b49e78b2bc29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameState: 0
-  _score: 0
-  _highScore: 0
 --- !u!4 &408238358
 Transform:
   m_ObjectHideFlags: 0
@@ -10874,12 +10871,12 @@ MonoBehaviour:
       - m_Target: {fileID: 1203224440}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: VolumeChanged
-        m_Mode: 4
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0.25
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -16238,7 +16235,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733609814}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 50.6}
   m_LocalScale: {x: 0.5, y: 0.4, z: 0.5}
   m_Children:
@@ -17583,7 +17580,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh637614
+  m_Name: pb_Mesh165370
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -19676,7 +19673,7 @@ MonoBehaviour:
   _optionsCanvas: {fileID: 369480872}
   _startMenuCanvas: {fileID: 674969538}
   _startButton: {fileID: 0}
-  _pauseButton: {fileID: 0}
+  _pauseButton: {fileID: 689563452}
   _tapText: {fileID: 0}
   _scoreText: {fileID: 0}
   _highScoreText: {fileID: 0}
@@ -24820,7 +24817,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh637876
+  m_Name: pb_Mesh165560
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
