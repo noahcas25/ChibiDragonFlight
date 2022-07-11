@@ -23,10 +23,10 @@ public class DragonShop : MonoBehaviour
     }
 
     private void CorrectNumberValue() {
-         if(_skinMaterialNumber > 32) 
+         if(_skinMaterialNumber > 15) 
             _skinMaterialNumber = 0;
         if(_skinMaterialNumber < 0) 
-            _skinMaterialNumber = 32;
+            _skinMaterialNumber = 15;
     }
 
     public void ChangeSkinMaterial(string skinMaterial) {

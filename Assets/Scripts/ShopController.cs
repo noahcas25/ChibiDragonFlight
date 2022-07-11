@@ -12,8 +12,8 @@ public class ShopController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _dragonNumText, _currencyText;
     [SerializeField] private DragonShop _dragon;
     [SerializeField] private GameObject playButton;
-    private Byte[] boolToBytes = new Byte[33];
-    private bool[] _unlockedSkins = new bool[33];
+    private Byte[] boolToBytes = new Byte[16];
+    private bool[] _unlockedSkins = new bool[16];
     private int _currency;
     private String _proof;
 
@@ -68,7 +68,7 @@ public class ShopController : MonoBehaviour
 
     private void SaveData() {
 
-        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest.dat", FileMode.Create, FileAccess.Write, FileShare.None)) {
+        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Create, FileAccess.Write, FileShare.None)) {
             using(var writer = new BinaryWriter(file, Encoding.UTF8, false)) {
                 for(int i = 0; i < _unlockedSkins.Length; i++)
                     writer.Write(_unlockedSkins[i]);
@@ -78,9 +78,9 @@ public class ShopController : MonoBehaviour
     }
 
     private void LoadData() {
-        if(!File.Exists(Application.persistentDataPath + "GameSaveTest.dat")) return;
+        if(!File.Exists(Application.persistentDataPath + "GameSaveTest1.dat")) return;
 
-        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest.dat", FileMode.Open, FileAccess.Read, FileShare.None)) {
+        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Open, FileAccess.Read, FileShare.None)) {
             using(var reader = new BinaryReader(file, Encoding.UTF8, false)) {
                 for(int i = 0; i < _unlockedSkins.Length; i++)
                     _unlockedSkins[i] = reader.ReadBoolean();
