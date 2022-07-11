@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
-    public bool _gameState = false;
-    public int _score = 0;
-    public int _highScore = 0;
+    private bool _gameState = false;
+    private int _score = 0;
+    private int _highScore = 0;
 
     [System.NonSerialized] public UnityEvent<bool> _gameStateEvent;
     [System.NonSerialized] public UnityEvent<int> _scoreChangeEvent;
@@ -29,9 +29,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnDisable() {
-        SetHighScore();
+        SavePrefs();
         ResetVariables();
-        _highScore = 0;
     }
 
     public void ChangeScore(int score) {
@@ -58,6 +57,17 @@ public class GameManager : MonoBehaviour
             _highScore = _score;
             PlayerPrefs.SetInt("highScore", _highScore);
         }
+    }
+
+    public int GetScore() => _score;
+
+    public int GetHighScore() => _highScore;
+
+    public bool GetGameState() => _gameState;
+
+    private void SavePrefs() {
+        SetHighScore();
+        PlayerPrefs.SetInt("Currency",  PlayerPrefs.GetInt("Currency") + _score);
     }
     
     public void ChangeScene(string sceneName) => SceneManager.LoadScene(sceneName); 

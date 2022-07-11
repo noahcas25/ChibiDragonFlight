@@ -11,17 +11,22 @@ public class DragonShop : MonoBehaviour
             ShopController.Instance.ChangeMaterialButton(PlayerPrefs.GetInt("skinMaterial"));
     }
 
-    private void OnDisable() => PlayerPrefs.SetInt("skinMaterial", _skinMaterialNumber);
+    public void SaveSkinData() {
+        PlayerPrefs.SetInt("skinMaterial", _skinMaterialNumber);
+    }
 
     public void ChangeNumberMaterial(int value) {
         _skinMaterialNumber += value;
 
-        if(_skinMaterialNumber > 32) 
-            _skinMaterialNumber = 0;
-       if(_skinMaterialNumber < 0) 
-            _skinMaterialNumber = 32;
-
+        CorrectNumberValue();
         ChangeSkinMaterial("T_Dragon_" + _skinMaterialNumber);
+    }
+
+    private void CorrectNumberValue() {
+         if(_skinMaterialNumber > 32) 
+            _skinMaterialNumber = 0;
+        if(_skinMaterialNumber < 0) 
+            _skinMaterialNumber = 32;
     }
 
     public void ChangeSkinMaterial(string skinMaterial) {
