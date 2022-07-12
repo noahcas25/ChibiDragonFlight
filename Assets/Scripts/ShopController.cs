@@ -55,7 +55,7 @@ public class ShopController : MonoBehaviour
             ChangeMaterialButton(0);
         } else{
             _currencyText.GetComponent<Animator>().Play("CurrencyJiggle", 0, 0.25f);
-            // AudioManager.Instance.PlayOneShot(3);
+            AudioManager.Instance.PlayOneShot(3);
         }
     }
 

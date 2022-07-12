@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour
             _startMenuCanvas.SetActive(true);
     }
 
-    public void VolumeChanged() => AudioManager.Instance._audioSource.volume = _pauseButton.GetComponent<Slider>().value;
+    public void VolumeChanged() => AudioManager.Instance.ChangeVolume(_pauseButton.GetComponent<Slider>().value);
 
     private void ChangeScoreText(int score) {
         if(_scoreText != null) 
