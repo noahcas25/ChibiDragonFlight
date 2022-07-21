@@ -8,8 +8,10 @@ public class UIManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject _gameOverCanvas, _optionsCanvas, _startMenuCanvas, _startButton, _pauseButton, _tapText;
-    [SerializeField] private TextMeshProUGUI _scoreText, _highScoreText, _scoreTextGameOver;
+    [SerializeField] private TextMeshProUGUI _scoreText, _highScoreText, _scoreTextGameOver, _totalCurrencyText;
     [SerializeField] private GameObject _gameOverFlash;
+
+    public static UIManager Instance {get; private set;}
 
     private void Awake() => Application.targetFrameRate = 60;
 
@@ -44,6 +46,7 @@ public class UIManager : MonoBehaviour
             _gameOverCanvas.SetActive(true);
             _scoreTextGameOver.text = _scoreText.text;
             _highScoreText.text = GameManager.Instance.GetHighScore() + "";
+            _totalCurrencyText.text = GameManager.Instance.GetCurrency() + "";
         }
     }
 
@@ -59,10 +62,13 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         _optionsCanvas.SetActive(false);
 
-        if(_startMenuCanvas!=null)
+        if(_startMenuCanvas!=null) {
             _startMenuCanvas.SetActive(true);
+            PlayerPrefs.SetFloat("Volume", AudioManager.Instance.GetAudioSource().volume);
+        }
     }
 
+    // _pauseButton is being used as the volume slider
     public void VolumeChanged() => AudioManager.Instance.ChangeVolume(_pauseButton.GetComponent<Slider>().value);
 
     private void ChangeScoreText(int score) {

@@ -19,7 +19,7 @@ public class DragonTitle : MonoBehaviour
     }
 
     private void Update() {         
-        Movement();
+        // Movement();
     }
 
     private void Movement() {
@@ -41,7 +41,6 @@ public class DragonTitle : MonoBehaviour
 
         for(int i=0; i < 9f; i++) {
             _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-            VelocityToRotation();
         }
     }
 

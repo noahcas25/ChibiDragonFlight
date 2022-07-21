@@ -6,14 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set;}
 
     private bool _gameState = false;
     private int _score = 0;
     private int _highScore = 0;
+    private int _currency = 0;
 
     [System.NonSerialized] public UnityEvent<bool> _gameStateEvent;
     [System.NonSerialized] public UnityEvent<int> _scoreChangeEvent;
+
+    public static GameManager Instance {get; private set;}
 
     private void Awake() => Instance = this;
 
@@ -26,6 +28,9 @@ public class GameManager : MonoBehaviour
 
         if(PlayerPrefs.HasKey("highScore"))
             _highScore = PlayerPrefs.GetInt("highScore");
+
+        if(PlayerPrefs.HasKey("Currency"))
+            _currency = PlayerPrefs.GetInt("Currency");
     }
 
     private void OnDisable() {
@@ -53,21 +58,24 @@ public class GameManager : MonoBehaviour
     }
 
     private void SetHighScore() {
-        if(_score > _highScore) {
+        if(_score > _highScore)
             _highScore = _score;
-            PlayerPrefs.SetInt("highScore", _highScore);
-        }
+
+        if(_score > 0)
+            _currency += _score;
     }
 
     public int GetScore() => _score;
 
     public int GetHighScore() => _highScore;
 
+    public int GetCurrency() => _currency;
+
     public bool GetGameState() => _gameState;
 
     private void SavePrefs() {
-        SetHighScore();
-        PlayerPrefs.SetInt("Currency",  PlayerPrefs.GetInt("Currency") + _score);
+        PlayerPrefs.SetInt("highScore", _highScore);
+        PlayerPrefs.SetInt("Currency",  _currency);
     }
     
     public void ChangeScene(string sceneName) => SceneManager.LoadScene(sceneName); 

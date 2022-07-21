@@ -32,7 +32,7 @@ public class Dragon : MonoBehaviour
 
     private void Movement() {
         VelocityToRotation();
-        Keys();
+        // Keys();
         TouchControls();
 
         transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
@@ -64,8 +64,10 @@ public class Dragon : MonoBehaviour
         _dragonAnimator.SetFloat("Running", 0);
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
-
-        _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
+        
+        for(int i = 0; i < _jumpSensitivity; i++) {
+            _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
+        }
     }
 
      private IEnumerator JumpDelay() {

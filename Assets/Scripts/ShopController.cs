@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 using TMPro;
 
 public class ShopController : MonoBehaviour
@@ -12,10 +14,9 @@ public class ShopController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _dragonNumText, _currencyText;
     [SerializeField] private DragonShop _dragon;
     [SerializeField] private GameObject playButton;
-    private Byte[] boolToBytes = new Byte[16];
+
     private bool[] _unlockedSkins = new bool[16];
     private int _currency;
-    private String _proof;
 
     public static ShopController Instance {get; private set;}
 
@@ -27,9 +28,6 @@ public class ShopController : MonoBehaviour
     private void OnEnable() {
         LoadData();
         LoadPrefs();
-
-        ChangeMaterialButton(0);
-        _currencyText.text = _currency + " ";
     }
 
     private void OnDisable() {
@@ -60,20 +58,18 @@ public class ShopController : MonoBehaviour
     }
 
     public void ChangeScene(string sceneName) {
-        if(sceneName == "LastScene") {
+        if(sceneName == "GameScene") {
             _dragon.SaveSkinData();
         }
         SceneManager.LoadScene(sceneName);
     } 
 
     private void SaveData() {
-
         using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Create, FileAccess.Write, FileShare.None)) {
             using(var writer = new BinaryWriter(file, Encoding.UTF8, false)) {
                 for(int i = 0; i < _unlockedSkins.Length; i++)
                     writer.Write(_unlockedSkins[i]);
             }
-             Debug.Log("Game data saved!");
         }
     }
 
@@ -82,20 +78,38 @@ public class ShopController : MonoBehaviour
 
         using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Open, FileAccess.Read, FileShare.None)) {
             using(var reader = new BinaryReader(file, Encoding.UTF8, false)) {
-                for(int i = 0; i < _unlockedSkins.Length; i++)
+                for(int i = 0; i < _unlockedSkins.Length; i++) {
+                    if(reader.BaseStream.Position == reader.BaseStream.Length){
+                        print("EndOfFileReached-IssueWithUnlockedSkins");
+                        return;
+                    }
+
                     _unlockedSkins[i] = reader.ReadBoolean();
+                }
             }
         }
-
-        Debug.Log("Game data loaded!");
     }
 
     private void LoadPrefs() {
         if(PlayerPrefs.HasKey("Currency"))
             _currency = PlayerPrefs.GetInt("Currency");
+
+        ChangeMaterialButton(0);
+        _currencyText.text = _currency + " ";
     }
 
     private void SavePrefs() {
         PlayerPrefs.SetInt("Currency", _currency);
+    }
+
+    // Function to initiate an ads to play
+    public void PlayAd()  {
+         AdsManager.Instance.PlayRewardAd();
+    }
+
+    // // Reward for watching ad
+    public void AdReward() {
+         _currency += 100; 
+         _currencyText.text = _currency + "";
     }
 }
