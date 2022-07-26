@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 619238698a165924d94318f03cd3caae, type: 3}
   - {fileID: 8300000, guid: 199e2c6af01bb5f4a987c8da05ee837b, type: 3}
   - {fileID: 8300000, guid: d8894196d9e982f41bac9bdf1a104e7d, type: 3}
+  - {fileID: 8300000, guid: a1f30c7e7920c2f40a07afc8c2787b83, type: 3}
 --- !u!114 &1973219032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,8 +313,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneNames:
   - StartScene
-  - LastScene
-  - Shop
+  - GameScene
+  - ShopScene
   instanceName: Audio
 --- !u!4 &1973219033
 Transform:
@@ -328,4 +329,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2105058165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105058168}
+  - component: {fileID: 2105058167}
+  - component: {fileID: 2105058166}
+  m_Layer: 0
+  m_Name: AdsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2105058166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105058165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67dfe7c13e819ee4fad349f65afe7526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneNames:
+  - StartScene
+  - GameScene
+  - ShopScene
+  instanceName: 
+--- !u!114 &2105058167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105058165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e246c06ed0f7b84b907b52bc8bbe3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iOSGameId: 4840934
+  _iOSAdUnitId: iOS
+  _androidGameId: 4840935
+  _androidAdUnitId: Android
+  _testMode: 0
+--- !u!4 &2105058168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105058165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.074142, y: -14.972354, z: 47.142326}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

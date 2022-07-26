@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set;}
-
     private bool _gameState = false;
-    private int _score = 0;
-    private int _highScore = 0;
+    private int _score, _highScore, _currency;
 
     [System.NonSerialized] public UnityEvent<bool> _gameStateEvent;
     [System.NonSerialized] public UnityEvent<int> _scoreChangeEvent;
+
+    public static GameManager Instance {get; private set;}
 
     private void Awake() => Instance = this;
 
@@ -26,7 +25,12 @@ public class GameManager : MonoBehaviour
 
         if(PlayerPrefs.HasKey("highScore"))
             _highScore = PlayerPrefs.GetInt("highScore");
-    }
+
+        if(PlayerPrefs.HasKey("Currency"))
+            _currency = PlayerPrefs.GetInt("Currency");
+        
+        AdsManager.Instance.LoadAd("Interstitial_");
+   }
 
     private void OnDisable() {
         SavePrefs();
@@ -53,21 +57,30 @@ public class GameManager : MonoBehaviour
     }
 
     private void SetHighScore() {
-        if(_score > _highScore) {
+        if(_score > _highScore)
             _highScore = _score;
-            PlayerPrefs.SetInt("highScore", _highScore);
-        }
+
+        if(_score > 0)
+            _currency += _score;
     }
 
     public int GetScore() => _score;
 
     public int GetHighScore() => _highScore;
 
+    public int GetCurrency() => _currency;
+
     public bool GetGameState() => _gameState;
 
     private void SavePrefs() {
-        SetHighScore();
-        PlayerPrefs.SetInt("Currency",  PlayerPrefs.GetInt("Currency") + _score);
+        PlayerPrefs.SetInt("highScore", _highScore);
+        PlayerPrefs.SetInt("Currency",  _currency);
+    }
+
+    public void ReplayGame() {
+        if(Random.Range(0, 3) == 2) {
+            AdsManager.Instance.PlayAd();
+        } else ChangeScene("GameScene");
     }
     
     public void ChangeScene(string sceneName) => SceneManager.LoadScene(sceneName); 

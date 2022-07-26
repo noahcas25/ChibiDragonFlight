@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-     [SerializeField] public AudioSource _audioSource;
+     [SerializeField] private AudioSource _audioSource;
      [SerializeField] private AudioClip[] _audioClips;
-   
 
     public static AudioManager Instance {get; private set;}
 
@@ -14,5 +13,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayOneShot(int arrayIndex) => _audioSource.PlayOneShot(_audioClips[arrayIndex]);
 
+    public void ChangeVolume(float value) => _audioSource.volume = value;
 
+    public AudioSource GetAudioSource() => _audioSource;
 }

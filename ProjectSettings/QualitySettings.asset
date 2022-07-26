@@ -82,9 +82,9 @@ QualitySettings:
     name: Medium
     pixelLightCount: 1
     shadows: 1
-    shadowResolution: 0
+    shadowResolution: 1
     shadowProjection: 1
-    shadowCascades: 1
+    shadowCascades: 2
     shadowDistance: 20
     shadowNearPlaneOffset: 1
     shadowCascade2Split: 0.33333334
@@ -222,4 +222,8 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms: []
-  m_PerPlatformDefaultQuality: {}
+  m_PerPlatformDefaultQuality:
+    Android: 2
+    Standalone: 0
+    WebGL: 0
+    Windows Store Apps: 0

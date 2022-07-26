@@ -4,64 +4,13 @@ using UnityEngine;
 
 public class DragonTitle : MonoBehaviour
 {
-    [SerializeField] private float _walkSpeed;
-    [SerializeField] private Animator _dragonAnimator;
-    [SerializeField] private Rigidbody _dragonRB;
-
-    private bool _canJump = true;
-    private Vector3 _startPosition;
-
     private void OnEnable() {
-         _startPosition = transform.position;
-
         if(PlayerPrefs.HasKey("skinMaterial"))
             ChangeSkinMaterial("T_Dragon_" + PlayerPrefs.GetInt("skinMaterial"));
     }
 
-    private void Update() {         
-        Movement();
-    }
-
-    private void Movement() {
-        VelocityToRotation();
-        Jump();
-        transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
-    }
-
-    private void VelocityToRotation() {
-        Quaternion newRotation = new Quaternion();
-        newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y-10, 0, 0);
-        transform.rotation = newRotation;
-    }
-
-    private void Jump() {
-        if(!_canJump) return;
-        StartCoroutine(JumpDelay());
-        _dragonRB.velocity = new Vector3(0,0,0);
-
-        for(int i=0; i < 9f; i++) {
-            _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-            VelocityToRotation();
-        }
-    }
-
-     private IEnumerator JumpDelay() {
-        _canJump = false;
-        yield return new WaitForSeconds(.65f);
-        _canJump = true;
-    }
-
     private void ChangeSkinMaterial(string skinMaterial) {
-        for(int i = 1; i < 5; i++) {
+        for(int i = 1; i < 5; i++)
             transform.GetChild(i).gameObject.GetComponent<SkinnedMeshRenderer>().material = Resources.Load(skinMaterial, typeof(Material)) as Material;
-        } 
     }
-
-    private void OnTriggerEnter(Collider other) {
-        if(other.CompareTag("Trap")) {
-
-            _dragonRB.velocity = new Vector3(0,0,0);
-            transform.position = _startPosition;
-        }
-  }
 }
