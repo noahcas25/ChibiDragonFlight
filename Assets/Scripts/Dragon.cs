@@ -101,7 +101,7 @@ public class Dragon : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other) {
-        if(other.gameObject.tag == "Floor" && _canMove)
+        if(other.gameObject.CompareTag("Floor") && _canMove)
             _dragonAnimator.SetFloat("Running", 1);
     }
 }
