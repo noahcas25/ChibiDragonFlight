@@ -13,6 +13,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     [SerializeField] bool _testMode = true;
     private string _gameId;
     private string _adUnitId;
+    private bool _adLoaded = false;
 
     public static AdsManager Instance {get; private set;}
 
@@ -30,7 +31,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     }
  
     public void OnInitializationComplete() {
-        Debug.Log("Unity Ads initialization complete.");
+        // Debug.Log("Unity Ads initialization complete.");
     }
  
     public void OnInitializationFailed(UnityAdsInitializationError error, string message) {
@@ -44,24 +45,21 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     }
 
     public void PlayAd() {
-        LoadAd("Interstitial_");
+            ShowAd("Interstitial_" + _adUnitId);
     }
 
     public void PlayRewardAd() {
-        LoadAd("Rewarded_");
+            ShowAd("Rewarded_" + _adUnitId);
     }
 
         // Load content to the Ad Unit:
     public void LoadAd(string adType) {
-        Debug.Log("Loading Ad: " + _adUnitId);
         Advertisement.Load(adType + _adUnitId, this);
     }
  
     // If the ad successfully loads, add a listener to the button and enable it:
     public void OnUnityAdsAdLoaded(string adUnitId) {
-        Debug.Log("Ad Loaded: " + adUnitId);
-
-        ShowAd(adUnitId);
+        // Debug.Log("Ad Loaded: " + adUnitId);
     }
  
     // Implement a method to execute when the user clicks the button:
@@ -72,8 +70,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState) {
 
-            if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED)) {
-                Debug.Log("Unity Ads Rewarded Ad Completed");
+            if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED) && adUnitId.Equals("Rewarded_" + _adUnitId)) {
+            // Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
                 ShopController.Instance.AdReward();
             }

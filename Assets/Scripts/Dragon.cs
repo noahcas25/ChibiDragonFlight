@@ -19,7 +19,7 @@ public class Dragon : MonoBehaviour
     private void OnEnable() {
         GameManager.Instance._gameStateEvent.AddListener(PlayerDied);
 
-         if(PlayerPrefs.HasKey("skinMaterial"))
+        if(PlayerPrefs.HasKey("skinMaterial"))
             ChangeSkinMaterial("T_Dragon_" + PlayerPrefs.GetInt("skinMaterial"));
     }
 
@@ -32,7 +32,6 @@ public class Dragon : MonoBehaviour
 
     private void Movement() {
         VelocityToRotation();
-        // Keys();
         TouchControls();
 
         transform.position += new Vector3(0, 0, _walkSpeed) * Time.deltaTime;
@@ -42,14 +41,6 @@ public class Dragon : MonoBehaviour
     private void VelocityToRotation() {
         _newRotation.eulerAngles = new Vector3(3 * -_dragonRB.velocity.y - 10, 0, 0);
         transform.rotation = _newRotation;
-    }
-
-    private void Keys() {
-        if(Input.GetKeyDown("w"))
-            Jump();
-
-        if(Input.GetKeyDown("r"))
-            SceneManager.LoadScene("LastScene");
     }
 
     private void TouchControls() {
@@ -65,9 +56,9 @@ public class Dragon : MonoBehaviour
         _dragonRB.velocity = new Vector3(0,0,0);
         StartCoroutine(JumpDelay());
         
-        for(int i = 0; i < _jumpSensitivity; i++) {
-            _dragonRB.AddForce(0, 1, 0, ForceMode.Impulse);
-        }
+        // for(int i = 0; i < _jumpSensitivity; i++) {
+            _dragonRB.AddForce(0, _jumpSensitivity, 0, ForceMode.Impulse);
+        // }
     }
 
      private IEnumerator JumpDelay() {

@@ -35,6 +35,11 @@ public class ShopController : MonoBehaviour
         SavePrefs();
     }
 
+    private void Start() {
+        AdsManager.Instance.LoadAd("Rewarded_");
+    }
+
+
     public void ChangeMaterialButton(int value) {
         _dragon.ChangeNumberMaterial(value);
         _dragonNumText.text = _dragon._skinMaterialNumber + 1 + "";
@@ -58,9 +63,9 @@ public class ShopController : MonoBehaviour
     }
 
     public void ChangeScene(string sceneName) {
-        if(sceneName == "GameScene") {
+        if(sceneName == "GameScene")
             _dragon.SaveSkinData();
-        }
+
         SceneManager.LoadScene(sceneName);
     } 
 
@@ -107,7 +112,7 @@ public class ShopController : MonoBehaviour
          AdsManager.Instance.PlayRewardAd();
     }
 
-    // // Reward for watching ad
+    // Reward for watching ad
     public void AdReward() {
          _currency += 100; 
          _currencyText.text = _currency + "";
