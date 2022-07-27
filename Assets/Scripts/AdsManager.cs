@@ -69,7 +69,6 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
  
     // Implement the Show Listener's OnUnityAdsShowComplete callback method to determine if the user gets a reward:
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState) {
-
             if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED) && adUnitId.Equals("Rewarded_" + _adUnitId)) {
             // Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
