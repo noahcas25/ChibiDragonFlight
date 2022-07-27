@@ -80,7 +80,9 @@ public class GameManager : MonoBehaviour
     public void ReplayGame() {
         if(Random.Range(0, 3) == 2) {
             AdsManager.Instance.PlayAd();
-        } else ChangeScene("GameScene");
+        }
+        
+        ChangeScene("GameScene");
     }
     
     public void ChangeScene(string sceneName) => SceneManager.LoadScene(sceneName); 

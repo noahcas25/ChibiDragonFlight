@@ -7,6 +7,8 @@ public class UIManagerTitle : MonoBehaviour
 {
      [SerializeField] private GameObject _startMenuCanvas, _optionsCanvas, _volumeSlider;
 
+    private void Awake() => Application.targetFrameRate = 60;
+
     public void OpenOptions() { 
         Time.timeScale = 0f;
         _optionsCanvas.SetActive(true);
