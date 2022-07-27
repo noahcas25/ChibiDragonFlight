@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void ReplayGame() {
-        if(Random.Range(0, 3) == 2) {
+        if(Random.Range(0, 4) == 3) {
             AdsManager.Instance.PlayAd();
         }
         
