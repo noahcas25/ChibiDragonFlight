@@ -70,7 +70,7 @@ public class ShopController : MonoBehaviour
     } 
 
     private void SaveData() {
-        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Create, FileAccess.Write, FileShare.None)) {
+        using(FileStream file = File.Open(Application.persistentDataPath + "GameSave.dat", FileMode.Create, FileAccess.Write, FileShare.None)) {
             using(var writer = new BinaryWriter(file, Encoding.UTF8, false)) {
                 for(int i = 0; i < _unlockedSkins.Length; i++)
                     writer.Write(_unlockedSkins[i]);
@@ -79,9 +79,9 @@ public class ShopController : MonoBehaviour
     }
 
     private void LoadData() {
-        if(!File.Exists(Application.persistentDataPath + "GameSaveTest1.dat")) return;
+        if(!File.Exists(Application.persistentDataPath + "GameSave.dat")) return;
 
-        using(FileStream file = File.Open(Application.persistentDataPath + "GameSaveTest1.dat", FileMode.Open, FileAccess.Read, FileShare.None)) {
+        using(FileStream file = File.Open(Application.persistentDataPath + "GameSave.dat", FileMode.Open, FileAccess.Read, FileShare.None)) {
             using(var reader = new BinaryReader(file, Encoding.UTF8, false)) {
                 for(int i = 0; i < _unlockedSkins.Length; i++) {
                     if(reader.BaseStream.Position == reader.BaseStream.Length){

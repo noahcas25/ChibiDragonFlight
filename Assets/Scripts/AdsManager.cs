@@ -13,7 +13,6 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener, IUnity
     [SerializeField] bool _testMode = true;
     private string _gameId;
     private string _adUnitId;
-    private bool _adLoaded = false;
 
     public static AdsManager Instance {get; private set;}
 
